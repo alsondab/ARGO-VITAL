@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AGRO-VITAL - De la terre à la table, l'excellence à chaque étape</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; background: #f7faf7; }
+        a { color: inherit; text-decoration: none; }
+        /* Navbar Modern */
+        .navbar { position: fixed; top: 0; width: 100%; background: #fff; z-index: 1000; box-shadow: 0 2px 16px rgba(44,167,80,0.08); transition: box-shadow 0.3s; }
+        .nav-container { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 0.7rem 2rem; }
+        .logo { display: flex; align-items: center; font-size: 2rem; font-weight: bold; background: linear-gradient(135deg, #2E7D32, #4CAF50); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .logo-img { height: 60px; width: auto; margin-right: 0.7rem; vertical-align: middle; }
+        .nav-links { display: flex; list-style: none; gap: 1.2rem; align-items: center; }
+        .nav-links > li { position: relative; }
+        .nav-links a, .dropbtn { font-weight: 500; font-size: 1.08rem; padding: 0.5rem 1rem; border-radius: 6px; transition: background 0.2s, color 0.2s; }
+        .nav-links a:hover, .dropbtn:hover { background: #e8f5e9; color: #2E7D32; }
+        .dropdown-content { box-shadow: 0 8px 24px rgba(44,167,80,0.13); border-radius: 10px; min-width: 200px; }
+        .nav-contact-btn { background: linear-gradient(135deg, #2E7D32, #4CAF50); color: #fff !important; border: none; padding: 0.5rem 1.2rem; border-radius: 25px; font-weight: 600; margin-left: 1.2rem; box-shadow: 0 2px 8px rgba(44,167,80,0.10); transition: background 0.2s, box-shadow 0.2s; }
+        .nav-contact-btn:hover { background: linear-gradient(135deg, #4CAF50, #2E7D32); color: #fff; box-shadow: 0 4px 16px rgba(44,167,80,0.18); }
+        .hamburger { display: none; flex-direction: column; justify-content: center; width: 32px; height: 32px; background: none; border: none; cursor: pointer; gap: 6px; z-index: 1100; transition: all 0.3s; }
+        .hamburger span { display: block; height: 4px; width: 100%; background: #2E7D32; border-radius: 2px; transition: all 0.3s; }
+        .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(7px, 7px); }
+        .hamburger.open span:nth-child(2) { opacity: 0; }
+        .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(8px, -8px); }
+        @media (max-width: 900px) {
+            .nav-container { padding: 0.7rem 1rem; }
+            .nav-links { position: fixed; top: 70px; right: -100vw; flex-direction: column; background: #fff; width: 220px; height: calc(100vh - 70px); gap: 1.5rem; padding: 2rem 1rem; box-shadow: -2px 0 16px rgba(44,167,80,0.10); transition: right 0.3s; display: flex; align-items: flex-start; }
+            .nav-links.open { right: 0; }
+            .hamburger { display: flex; }
+            .nav-contact-btn { margin-left: 0; margin-top: 1.5rem; width: 100%; text-align: center; }
+        }
+        /* Hero */
+        .hero { height: 100vh; min-height: 500px; background: #1B5E20; display: flex; align-items: center; justify-content: center; text-align: center; color: white; position: relative; overflow: hidden; }
+        .hero-bg-video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; opacity: 0.55; pointer-events: none; }
+        .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(120deg, rgba(30,70,32,0.45) 0%, rgba(44,167,80,0.35) 100%); z-index: 1; pointer-events: none; }
+        .hero-content { max-width: 800px; z-index: 2; position: relative; }
+        .hero-content h1 { font-size: 3.2rem; margin-bottom: 1rem; }
+        .hero-content p { font-size: 1.4rem; margin-bottom: 2rem; }
+        .cta-button { display: inline-block; background: linear-gradient(135deg, #FF6B35, #FF8E53); color: white; padding: 1rem 2rem; text-decoration: none; border-radius: 50px; font-weight: 600; transition: all 0.3s; box-shadow: 0 10px 30px rgba(255, 107, 53, 0.3); }
+        .cta-button:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(255, 107, 53, 0.4); }
+        /* Section */
+        .section { padding: 5rem 0 3rem 0; max-width: 1200px; margin: 0 auto; padding-left: 2rem; padding-right: 2rem; }
+        .section h2 { font-size: 2.3rem; text-align: center; margin-bottom: 2.5rem; background: linear-gradient(135deg, #2E7D32, #4CAF50); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        /* Encadré chiffres clés */
+        .key-figures { display: flex; flex-wrap: wrap; justify-content: center; gap: 2rem; margin: 2rem 0; }
+        .key-figure { background: #fff; border-radius: 16px; box-shadow: 0 4px 16px rgba(44,167,80,0.07); padding: 1.5rem 2.5rem; text-align: center; min-width: 180px; }
+        .key-figure .number { font-size: 2.2rem; font-weight: bold; color: #4CAF50; }
+        .key-figure .label { color: #666; font-size: 1.1rem; margin-top: 0.5rem; }
+        /* Grilles produits/services */
+        .grid3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 2rem; margin-top: 2.5rem; }
+        .card { background: #fff; border-radius: 18px; box-shadow: 0 8px 24px rgba(76, 175, 80, 0.08); padding: 2rem 1.5rem 1.5rem 1.5rem; text-align: center; transition: transform 0.3s, box-shadow 0.3s; border: 1.5px solid #c8e6c9; }
+        .card:hover { transform: translateY(-8px) scale(1.03); box-shadow: 0 16px 32px rgba(76, 175, 80, 0.15); }
+        .card .icon { font-size: 2.5rem; margin-bottom: 1.2rem; }
+        .card h3 { color: #2E7D32; margin-bottom: 0.7rem; font-size: 1.3rem; }
+        .card p { color: #444; font-size: 1rem; opacity: 0.95; }
+        /* SWOT */
+        .swot-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
+        .swot-card { border-radius: 14px; padding: 1.5rem 1rem; color: #fff; min-height: 180px; }
+        .swot-strengths { background: linear-gradient(135deg, #4CAF50, #2E7D32); }
+        .swot-weaknesses { background: linear-gradient(135deg, #FF9800, #F57C00); }
+        .swot-opportunities { background: linear-gradient(135deg, #2196F3, #1976D2); }
+        .swot-threats { background: linear-gradient(135deg, #F44336, #D32F2F); }
+        .swot-card h3 { font-size: 1.2rem; margin-bottom: 0.7rem; }
+        .swot-card ul { padding-left: 1.2rem; }
+        .swot-card li { margin-bottom: 0.5rem; font-size: 1rem; }
+        /* Timeline/Stratégie */
+        .timeline { margin: 2.5rem 0 0 0; border-left: 3px solid #4CAF50; padding-left: 2rem; }
+        .timeline-step { margin-bottom: 2.2rem; position: relative; }
+        .timeline-step:before { content: ''; position: absolute; left: -2.1rem; top: 0.2rem; width: 1.2rem; height: 1.2rem; background: #4CAF50; border-radius: 50%; border: 3px solid #fff; box-shadow: 0 0 0 2px #4CAF50; }
+        .timeline-step h4 { color: #2E7D32; font-size: 1.1rem; margin-bottom: 0.3rem; }
+        .timeline-step p { color: #444; font-size: 1rem; }
+        /* Contact Modern */
+        .contact { background: linear-gradient(135deg, #2E7D32, #4CAF50); color: white; padding: 0; }
+        .contact-flex { display: flex; align-items: stretch; justify-content: center; max-width: 1100px; margin: 0 auto; padding: 0; flex-wrap: wrap; }
+        .contact-content { flex: 1 1 350px; padding: 4rem 2rem 4rem 2rem; display: flex; flex-direction: column; justify-content: center; }
+        .contact-content h2 { color: #fff; margin-bottom: 1.2rem; font-size: 2.2rem; }
+        .contact-content p { color: #e0f2f1; margin-bottom: 2.2rem; }
+        .contact-info { display: flex; flex-direction: column; gap: 1.2rem; margin-bottom: 2.5rem; }
+        .contact-item { display: flex; align-items: center; gap: 1rem; font-size: 1.08rem; }
+        .contact-icon { width: 28px; height: 28px; fill: white; font-size: 1.3rem; }
+        .contact-form { background: #fff; border-radius: 18px; box-shadow: 0 8px 32px rgba(44,167,80,0.13); padding: 2.5rem 2rem; flex: 1 1 350px; display: flex; flex-direction: column; justify-content: center; min-width: 320px; max-width: 420px; margin: 4rem 2rem 4rem 0; }
+        .contact-form label { color: #2E7D32; font-weight: 500; margin-bottom: 0.3rem; }
+        .contact-form input, .contact-form textarea { width: 100%; padding: 0.8rem 1rem; border-radius: 8px; border: 1.5px solid #c8e6c9; margin-bottom: 1.2rem; font-size: 1rem; background: #f7faf7; transition: border 0.2s; }
+        .contact-form input:focus, .contact-form textarea:focus { border: 1.5px solid #4CAF50; outline: none; }
+        .contact-form textarea { min-height: 110px; resize: vertical; }
+        .contact-form button { background: linear-gradient(135deg, #2E7D32, #4CAF50); color: #fff; border: none; padding: 0.9rem 2rem; border-radius: 25px; font-weight: 600; font-size: 1.1rem; box-shadow: 0 2px 8px rgba(44,167,80,0.10); cursor: pointer; transition: background 0.2s, box-shadow 0.2s; }
+        .contact-form button:hover { background: linear-gradient(135deg, #4CAF50, #2E7D32); box-shadow: 0 4px 16px rgba(44,167,80,0.18); }
+        .contact-success { color: #2E7D32; font-weight: 600; margin-top: 1rem; text-align: center; }
+        @media (max-width: 900px) {
+            .contact-flex { flex-direction: column; align-items: stretch; }
+            .contact-form { margin: 2rem auto; }
+            .contact-content { padding: 2.5rem 1rem; }
+        }
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-content h1 { font-size: 2rem; }
+            .section h2 { font-size: 1.3rem; }
+            .key-figure { min-width: 120px; padding: 1rem; }
+        }
+        /* Dropdown styles */
+        .dropdown {
+            position: relative;
+        }
+        .dropbtn {
+            cursor: pointer;
+            font-weight: 500;
+            padding: 0.5rem 0.7rem;
+            border: none;
+            background: none;
+            color: inherit;
+            font-size: 1rem;
+            transition: color 0.3s;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background: #fff;
+            min-width: 180px;
+            box-shadow: 0 8px 24px rgba(44,167,80,0.10);
+            border-radius: 10px;
+            z-index: 2000;
+            top: 2.2rem;
+            left: 0;
+            flex-direction: column;
+            padding: 0.5rem 0;
+        }
+        .dropdown-content a {
+            color: #333;
+            padding: 0.7rem 1.2rem;
+            text-decoration: none;
+            display: block;
+            font-size: 1rem;
+            border-radius: 6px;
+            transition: background 0.2s, color 0.2s;
+        }
+        .dropdown-content a:hover {
+            background: #e8f5e9;
+            color: #2E7D32;
+        }
+        .dropdown:hover .dropdown-content,
+        .dropdown:focus-within .dropdown-content {
+            display: flex;
+        }
+        @media (max-width: 900px) {
+            .dropdown-content {
+                position: static;
+                box-shadow: none;
+                min-width: 100%;
+                border-radius: 0;
+                background: none;
+                padding: 0;
+            }
+            .dropdown-content a {
+                padding: 1rem 0.5rem;
+                border-radius: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo"><img src="../icone/Agro-Vital-removebg-preview.png" alt="Logo Agro-Vital" class="logo-img">AGRO-VITAL</div>
+            <button class="hamburger" aria-label="Ouvrir le menu">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="nav-links">
+                <li><a href="#accueil">Accueil</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Présentation</a>
+                    <div class="dropdown-content">
+                        <a href="#besoin">Besoin</a>
+                        <a href="#produits">Produits</a>
+                        <a href="#services">Services</a>
+                        <a href="#approche">Approche</a>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Entreprise</a>
+                    <div class="dropdown-content">
+                        <a href="#mission">Mission</a>
+                        <a href="#swot">SWOT</a>
+                        <a href="#strategie">Stratégie</a>
+                        <a href="#juridique">Juridique</a>
+                        <a href="#financement">Financement</a>
+                    </div>
+                </li>
+                <li><a href="#contact" class="nav-contact-btn">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+    <!-- Hero -->
+    <section id="accueil" class="hero">
+        <video class="hero-bg-video" src="../video/HeroVideoAgro.mp4" autoplay loop muted playsinline></video>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1>De la terre à la table, l'excellence à chaque étape</h1>
+            <p>AGRO-VITAL répond au besoin vital d'une alimentation saine, locale et abordable pour les familles abidjanaises, tout en accompagnant les producteurs vers l'excellence agricole.</p>
+            <a href="#besoin" class="cta-button">Découvrir notre projet</a>
+        </div>
+    </section>
+    <!-- Besoin & Justification -->
+    <section class="section" id="besoin">
+        <h2>Un besoin vital pour la communauté d'Abidjan</h2>
+        <div class="key-figures">
+            <div class="key-figure"><div class="number">45%</div><div class="label">du budget des ménages consacré à l'alimentation</div></div>
+            <div class="key-figure"><div class="number">+15%</div><div class="label">d'augmentation des maladies liées à la malnutrition en 5 ans</div></div>
+            <div class="key-figure"><div class="number">30-40%</div><div class="label">de surcoût sur les produits frais à cause de la logistique</div></div>
+        </div>
+        <p style="max-width:800px;margin:2rem auto 0 auto;text-align:center;">L'urbanisation rapide d'Abidjan, l'éloignement des zones agricoles et la dépendance aux produits importés ont rendu l'accès à une alimentation saine difficile et coûteux. Les quartiers populaires comme Yopougon, Abobo et Port-Bouët sont particulièrement touchés. Notre mission : offrir une alternative locale, saine et abordable, tout en soutenant les producteurs ivoiriens.</p>
+    </section>
+    <!-- Nos Produits & Services Alimentaires -->
+    <section class="section" id="produits">
+        <h2>Nos produits & services alimentaires</h2>
+        <div class="grid3">
+            <div class="card"><div class="icon"><i class="fa-solid fa-apple-whole"></i></div><h3>Produits frais locaux</h3><p>Légumes bio (tomates, aubergines, épinards, gombo), fruits tropicaux (ananas, mangues, papayes), tubercules (igname, manioc, patate douce).</p></div>
+            <div class="card"><div class="icon"><i class="fa-solid fa-jar"></i></div><h3>Produits transformés artisanaux</h3><p>Confitures, jus naturels, chips de plantain, farines locales, épices et condiments traditionnels.</p></div>
+            <div class="card"><div class="icon"><i class="fa-solid fa-truck-fast"></i></div><h3>Services alimentaires complémentaires</h3><p>Paniers hebdomadaires personnalisés, livraison à domicile, conseils nutritionnels et recettes traditionnelles.</p></div>
+        </div>
+    </section>
+    <!-- Nos Services Agricoles Premium -->
+    <section class="section" id="services">
+        <h2>Nos services agricoles premium</h2>
+        <div class="grid3">
+            <div class="card"><div class="icon"><i class="fa-solid fa-vial-circle-check"></i></div><h3>Analyse & diagnostic des sols</h3><p>Évaluation complète de la fertilité, recommandations personnalisées, cartographie numérique, résultats en 48h.</p></div>
+            <div class="card"><div class="icon"><i class="fa-solid fa-faucet-drip"></i></div><h3>Installation de systèmes d'irrigation</h3><p>Étude de faisabilité, conception sur mesure, installation, maintenance et formation pour une irrigation efficace.</p></div>
+            <div class="card"><div class="icon"><i class="fa-solid fa-leaf"></i></div><h3>Assistance à l'agriculture biologique</h3><p>Accompagnement à la certification Bio CI, formation, fourniture d'intrants bio, suivi technique sur 24 mois.</p></div>
+        </div>
+    </section>
+    <!-- Notre Approche & Secteurs d'activité -->
+    <section class="section" id="approche">
+        <h2>Notre approche intégrée</h2>
+        <div class="grid3">
+            <div class="card"><div class="icon"><i class="fa-solid fa-tractor"></i></div><h3>Secteur primaire</h3><p>Production agricole via des coopératives partenaires (Marahoué, Bélier) pour garantir la qualité et l'approvisionnement.</p></div>
+            <div class="card"><div class="icon"><i class="fa-solid fa-industry"></i></div><h3>Secteur secondaire</h3><p>Transformation artisanale et conservation naturelle pour réduire les pertes post-récolte et valoriser les produits locaux.</p></div>
+            <div class="card"><div class="icon"><i class="fa-solid fa-store"></i></div><h3>Secteur tertiaire</h3><p>Distribution multicanale : e-commerce, points de vente urbains, livraison à domicile pour maximiser l'accès aux produits.</p></div>
+        </div>
+        <p style="max-width:800px;margin:2rem auto 0 auto;text-align:center;">Notre intégration verticale, enrichie par nos services premium, nous permet de maîtriser toute la chaîne de valeur, de réduire les coûts et de garantir la traçabilité et la qualité de nos produits.</p>
+    </section>
+    <!-- Mission, Vision, Valeurs -->
+    <section class="section" id="mission">
+        <h2>Mission, vision & valeurs</h2>
+        <div class="grid3">
+            <div class="card"><div class="icon"><i class="fa-solid fa-bullseye"></i></div><h3>Mission</h3><p>Nourrir les familles abidjanaises avec des produits sains, locaux et accessibles, tout en accompagnant les producteurs vers l'excellence agricole.</p></div>
+            <div class="card"><div class="icon"><i class="fa-solid fa-eye"></i></div><h3>Vision</h3><p>Devenir d'ici 2030 la référence des circuits courts alimentaires et des services agricoles premium en Afrique de l'Ouest.</p></div>
+            <div class="card"><div class="icon"><i class="fa-solid fa-gem"></i></div><h3>Valeurs</h3><p>Excellence technique, innovation responsable, équité sociale, durabilité environnementale, transparence.</p></div>
+        </div>
+    </section>
+    <!-- SWOT -->
+    <section class="section" id="swot">
+        <h2>Analyse SWOT</h2>
+        <div class="swot-grid">
+            <div class="swot-card swot-strengths"><h3>Forces</h3><ul><li>Services agricoles premium uniques</li><li>Équipe technique spécialisée</li><li>Laboratoire mobile d'analyse</li><li>Partenariats solides avec coopératives</li><li>Circuit court économiquement viable</li><li>Connaissance du marché local</li></ul></div>
+            <div class="swot-card swot-weaknesses"><h3>Faiblesses</h3><ul><li>Investissement initial élevé</li><li>Dépendance aux aléas climatiques</li><li>Besoins en personnel qualifié</li><li>Retour sur investissement long</li><li>Réseau de distribution restreint</li></ul></div>
+            <div class="swot-card swot-opportunities"><h3>Opportunités</h3><ul><li>Demande croissante pour l'agriculture de précision</li><li>Programmes gouvernementaux de soutien</li><li>Marché des services agricoles en expansion</li><li>Certification agriculture biologique</li><li>Partenariats avec institutions de recherche</li></ul></div>
+            <div class="swot-card swot-threats"><h3>Menaces</h3><ul><li>Arrivée de concurrents internationaux</li><li>Évolution des réglementations</li><li>Coût élevé des équipements spécialisés</li><li>Résistance au changement</li><li>Instabilité économique</li></ul></div>
+        </div>
+    </section>
+    <!-- Stratégie -->
+    <section class="section" id="strategie">
+        <h2>Notre stratégie</h2>
+        <div class="timeline">
+            <div class="timeline-step"><h4>Différenciation par l'expertise locale</h4><p>Développer une expertise pointue des sols ivoiriens et des techniques agricoles adaptées au climat tropical.</p></div>
+            <div class="timeline-step"><h4>Partenariats technologiques</h4><p>Accords avec des fournisseurs d'équipements pour bénéficier de tarifs préférentiels et d'un support technique renforcé.</p></div>
+            <div class="timeline-step"><h4>Programme de sensibilisation</h4><p>Journées de démonstration gratuites dans les coopératives partenaires pour lever les réticences et démontrer l'efficacité de nos services.</p></div>
+            <div class="timeline-step"><h4>Veille technologique</h4><p>Surveillance continue des innovations en agriculture de précision et irrigation.</p></div>
+            <div class="timeline-step"><h4>Centre de formation agricole</h4><p>Créer un centre certifiant en agriculture biologique et techniques d'irrigation modernes.</p></div>
+            <div class="timeline-step"><h4>Partenariats de recherche</h4><p>Collaboration avec le CNRA pour développer des solutions innovantes adaptées aux conditions locales.</p></div>
+            <div class="timeline-step"><h4>Expansion géographique ciblée</h4><p>Étendre nos services vers les régions productrices de cacao et d'hévéa.</p></div>
+            <div class="timeline-step"><h4>Certification internationale</h4><p>Obtenir les certifications ISO 17025 pour notre laboratoire d'analyse et devenir une référence régionale.</p></div>
+        </div>
+    </section>
+    <!-- Forme juridique -->
+    <section class="section" id="juridique">
+        <h2>Forme juridique : SARL</h2>
+        <div class="grid3">
+            <div class="card"><div class="icon"><i class="fa-solid fa-shield-halved"></i></div><h3>Protection patrimoniale</h3><p>Responsabilité limitée au montant des apports, protection du patrimoine personnel.</p></div>
+            <div class="card"><div class="icon"><i class="fa-solid fa-scale-balanced"></i></div><h3>Flexibilité & fiscalité</h3><p>Capital adaptable, fiscalité avantageuse (IS à 25%), gestion simplifiée.</p></div>
+            <div class="card"><div class="icon"><i class="fa-solid fa-handshake"></i></div><h3>Crédibilité commerciale</h3><p>Structure reconnue, facilite l'accès aux financements et marchés publics.</p></div>
+        </div>
+    </section>
+    <!-- Modèle économique & Financement -->
+    <section class="section" id="financement">
+        <h2>Modèle économique & financement</h2>
+        <div class="key-figures">
+            <div class="key-figure"><div class="number">60M FCFA</div><div class="label">Investissement initial</div></div>
+            <div class="key-figure"><div class="number">35%</div><div class="label">Marge nette sur services</div></div>
+            <div class="key-figure"><div class="number">4 ans</div><div class="label">Retour sur investissement</div></div>
+        </div>
+        <div class="grid3" style="margin-top:2.5rem;">
+            <div class="card"><div class="icon"><i class="fa-solid fa-piggy-bank"></i></div><h3>Sources de financement</h3><p>Fonds propres (30%), subventions publiques (40%), prêt bancaire (20%), financement participatif (10%).</p></div>
+            <div class="card"><div class="icon"><i class="fa-solid fa-screwdriver-wrench"></i></div><h3>Utilisation des fonds</h3><p>Laboratoire mobile, matériel d'irrigation, équipements de transformation, véhicules, marketing.</p></div>
+            <div class="card"><div class="icon"><i class="fa-solid fa-chart-line"></i></div><h3>Modèle économique</h3><p>Services premium facturés, vente de produits, accompagnement technique, rentabilité durable.</p></div>
+        </div>
+    </section>
+    <!-- Contact -->
+    <section id="contact" class="contact">
+        <div class="contact-flex">
+            <div class="contact-content">
+                <h2>Contactez-nous</h2>
+                <p>Rejoignez notre mission pour une alimentation saine et locale en Côte d'Ivoire</p>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fa-solid fa-envelope contact-icon"></i>
+                        <span>agrovital@contact.ci</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fa-solid fa-phone contact-icon"></i>
+                        <span>+225 07 07 43 30 51</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fa-solid fa-location-dot contact-icon"></i>
+                        <span>Abidjan, Côte d'Ivoire</span>
+                    </div>
+                </div>
+            </div>
+            <form class="contact-form" id="contactForm" autocomplete="off">
+                <label for="name">Nom</label>
+                <input type="text" id="name" name="name" required>
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+                <label for="message">Message</label>
+                <textarea id="message" name="message" required></textarea>
+                <button type="submit">Envoyer</button>
+                <div class="contact-success" id="contactSuccess" style="display:none;">Merci pour votre message !</div>
+            </form>
+        </div>
+    </section>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Hamburger menu
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        if (hamburger && navLinks) {
+            hamburger.addEventListener('click', () => {
+                navLinks.classList.toggle('open');
+                hamburger.classList.toggle('open');
+            });
+            navLinks.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    navLinks.classList.remove('open');
+                    hamburger.classList.remove('open');
+                });
+            });
+        }
+        // Contact form fake submit
+        const contactForm = document.getElementById('contactForm');
+        const contactSuccess = document.getElementById('contactSuccess');
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                contactSuccess.style.display = 'block';
+                setTimeout(() => { contactSuccess.style.display = 'none'; contactForm.reset(); }, 3500);
+            });
+        }
+        // Boucle sur un segment précis de la vidéo hero
+        const heroVideo = document.querySelector('.hero-bg-video');
+        if (heroVideo) {
+            heroVideo.currentTime = 584;
+            heroVideo.addEventListener('loadedmetadata', function() {
+                heroVideo.currentTime = 584;
+            });
+            heroVideo.addEventListener('timeupdate', function() {
+                if (heroVideo.currentTime >= 589) {
+                    heroVideo.currentTime = 584;
+                    heroVideo.play();
+                }
+            });
+        }
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    });
+    </script>
+</body>
+</html>

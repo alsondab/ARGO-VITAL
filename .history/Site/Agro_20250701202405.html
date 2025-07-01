@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AGRO-VITAL - Alimentation Saine et Locale</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #2E7D32, #4CAF50);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-img {
+            height: 80px;
+            width: auto;
+            margin-right: 0.7rem;
+            vertical-align: middle;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #4CAF50;
+        }
+
+        /* Hamburger menu styles */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            width: 30px;
+            height: 30px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            gap: 5px;
+            z-index: 1100;
+            transition: all 0.3s;
+        }
+        .hamburger span {
+            display: block;
+            height: 4px;
+            width: 100%;
+            background: #2E7D32;
+            border-radius: 2px;
+            transition: all 0.3s;
+        }
+        .hamburger.open span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        .hamburger.open span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger.open span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+        @media (max-width: 900px) {
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                right: -100vw;
+                flex-direction: column;
+                background: white;
+                width: 200px;
+                height: calc(100vh - 70px);
+                gap: 2rem;
+                padding: 2rem 1rem;
+                box-shadow: -2px 0 10px rgba(0,0,0,0.05);
+                transition: right 0.3s;
+                display: flex;
+            }
+            .nav-links.open {
+                right: 0;
+            }
+            .hamburger {
+                display: flex;
+            }
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(135deg, #1B5E20 0%, #2E7D32 50%, #4CAF50 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><radialGradient id="grad1" cx="50%" cy="50%" r="50%"><stop offset="0%" style="stop-color:rgba(255,255,255,0.1);stop-opacity:1" /><stop offset="100%" style="stop-color:rgba(255,255,255,0);stop-opacity:1" /></radialGradient></defs><circle cx="200" cy="200" r="3" fill="white" opacity="0.3"><animate attributeName="opacity" values="0.3;1;0.3" dur="2s" repeatCount="indefinite"/></circle><circle cx="800" cy="300" r="2" fill="white" opacity="0.5"><animate attributeName="opacity" values="0.5;1;0.5" dur="3s" repeatCount="indefinite"/></circle><circle cx="300" cy="700" r="2" fill="white" opacity="0.4"><animate attributeName="opacity" values="0.4;1;0.4" dur="2.5s" repeatCount="indefinite"/></circle></svg>');
+            pointer-events: none;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            z-index: 1;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.3s both;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #FF6B35, #FF8E53);
+            color: white;
+            padding: 1rem 2rem;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            animation: fadeInUp 1s ease 0.6s both;
+            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(255, 107, 53, 0.4);
+        }
+
+        /* Sections */
+        .section {
+            padding: 5rem 0;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-left: 2rem;
+            padding-right: 2rem;
+        }
+
+        .section h2 {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            background: linear-gradient(135deg, #2E7D32, #4CAF50);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* About Section */
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .about-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(76, 175, 80, 0.1);
+        }
+
+        .about-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .about-card h3 {
+            color: #2E7D32;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        /* Services Section */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+        .service-card {
+            background: linear-gradient(135deg, #e8f5e9 60%, #fff 100%);
+            border-radius: 18px;
+            box-shadow: 0 8px 24px rgba(76, 175, 80, 0.08);
+            padding: 2.5rem 1.5rem 2rem 1.5rem;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1.5px solid #c8e6c9;
+        }
+        .service-card:hover {
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 16px 32px rgba(76, 175, 80, 0.15);
+        }
+        .service-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1.2rem;
+        }
+        .service-card h3 {
+            color: #2E7D32;
+            margin-bottom: 0.7rem;
+            font-size: 1.3rem;
+        }
+        .service-card p {
+            color: #444;
+            font-size: 1rem;
+            opacity: 0.95;
+        }
+
+        /* Stats Section */
+        .stats {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 5rem 0;
+            margin: 5rem 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 2rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: scale(1.05);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #4CAF50;
+            display: block;
+        }
+
+        .stat-label {
+            color: #666;
+            font-weight: 500;
+            margin-top: 0.5rem;
+        }
+
+        /* SWOT Analysis */
+        .swot-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .swot-card {
+            padding: 2rem;
+            border-radius: 15px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .swot-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+
+        .swot-card:hover::before {
+            transform: translateX(100%);
+        }
+
+        .strengths { background: linear-gradient(135deg, #4CAF50, #2E7D32); }
+        .weaknesses { background: linear-gradient(135deg, #FF9800, #F57C00); }
+        .opportunities { background: linear-gradient(135deg, #2196F3, #1976D2); }
+        .threats { background: linear-gradient(135deg, #F44336, #D32F2F); }
+
+        .swot-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .swot-card ul {
+            list-style: none;
+        }
+
+        .swot-card li {
+            margin-bottom: 0.5rem;
+            padding-left: 1rem;
+            position: relative;
+        }
+
+        .swot-card li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(to bottom, #4CAF50, #2E7D32);
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            position: relative;
+            width: 50%;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+            text-align: right;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
+            text-align: left;
+        }
+
+        .timeline-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .timeline-content::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 0;
+            height: 0;
+            border: 15px solid transparent;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content::before {
+            right: -30px;
+            border-left-color: white;
+            transform: translateY(-50%);
+        }
+
+        .timeline-item:nth-child(even) .timeline-content::before {
+            left: -30px;
+            border-right-color: white;
+            transform: translateY(-50%);
+        }
+
+        .timeline-date {
+            color: #4CAF50;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Contact Section */
+        .contact {
+            background: linear-gradient(135deg, #2E7D32, #4CAF50);
+            color: white;
+            text-align: center;
+            padding: 5rem 0;
+        }
+
+        .contact-content {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .contact h2 {
+            color: white;
+            margin-bottom: 2rem;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .contact-icon {
+            width: 24px;
+            height: 24px;
+            fill: white;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+            }
+            
+            .section h2 {
+                font-size: 2rem;
+            }
+            
+            .swot-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .timeline::before {
+                left: 30px;
+            }
+            
+            .timeline-item {
+                width: 100%;
+                left: 0 !important;
+                text-align: left;
+                padding-left: 4rem;
+            }
+            
+            .timeline-content::before {
+                left: -30px !important;
+                border-right-color: white !important;
+                border-left-color: transparent !important;
+            }
+        }
+
+        /* Scroll animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo"><img src="../icone/Agro-Vital-removebg-preview.png" alt="Logo Agro-Vital" class="logo-img">AGRO-VITAL</div>
+            <button class="hamburger" aria-label="Ouvrir le menu">
+              <span></span>
+              <span></span>
+              <span></span>
+            </button>
+            <ul class="nav-links">
+                <li><a href="#accueil">Accueil</a></li>
+                <li><a href="#projet">Projet</a></li>
+                <li><a href="#analyse">Analyse</a></li>
+                <li><a href="#strategie">Stratégie</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="accueil" class="hero">
+        <div class="hero-content">
+            <h1 class="floating">AGRO-VITAL</h1>
+            <p>Révolutionner l'alimentation urbaine avec des produits locaux, sains et accessibles</p>
+            <a href="#projet" class="cta-button">Découvrir le Projet</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="projet" class="section fade-in">
+        <h2>Notre Mission</h2>
+        <div class="about-grid">
+            <div class="about-card">
+                <h3>🌱 Production Locale</h3>
+                <p>Partenariats avec des coopératives agricoles ivoiriennes pour garantir la fraîcheur et la qualité de nos produits tout en soutenant l'économie locale.</p>
+            </div>
+            <div class="about-card">
+                <h3>🏭 Transformation Artisanale</h3>
+                <p>Techniques de transformation naturelle pour prolonger la conservation et créer de la valeur ajoutée sur les produits agricoles locaux.</p>
+            </div>
+            <div class="about-card">
+                <h3>🚚 Distribution Innovante</h3>
+                <p>Circuit court utilisant une plateforme e-commerce et des points de vente stratégiques pour rendre les produits sains accessibles à tous.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="section fade-in" id="services">
+        <h2>Nos meilleurs services</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">🧪</div>
+                <h3>Analyse et analyse des sols</h3>
+                <p>Des diagnostics précis pour optimiser la fertilité et la santé de vos sols agricoles.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">💧</div>
+                <h3>Installation de systèmes d'irrigation</h3>
+                <p>Des solutions d'irrigation modernes et efficaces pour garantir la croissance optimale de vos cultures.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🌱</div>
+                <h3>Équipe d'assistance à l'agriculture biologique</h3>
+                <p>Un accompagnement expert pour développer une agriculture respectueuse de l'environnement.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats fade-in">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <span class="stat-number">45%</span>
+                <span class="stat-label">Budget alimentaire des ménages abidjanais</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">50M</span>
+                <span class="stat-label">FCFA de financement initial</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">7</span>
+                <span class="stat-label">Coopératives partenaires</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">2030</span>
+                <span class="stat-label">Vision de leadership régional</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- SWOT Analysis -->
+    <section id="analyse" class="section fade-in">
+        <h2>Analyse SWOT</h2>
+        <div class="swot-container">
+            <div class="swot-card strengths">
+                <h3>FORCES</h3>
+                <ul>
+                    <li>Produits à forte valeur nutritionnelle</li>
+                    <li>Partenariats agricoles solides</li>
+                    <li>Circuit court économique</li>
+                    <li>Équipe jeune et dynamique</li>
+                    <li>Connaissance du marché local</li>
+                </ul>
+            </div>
+            <div class="swot-card weaknesses">
+                <h3>FAIBLESSES</h3>
+                <ul>
+                    <li>Investissement initial élevé</li>
+                    <li>Dépendance climatique</li>
+                    <li>Expérience commerciale limitée</li>
+                    <li>Capacité de stockage restreinte</li>
+                    <li>Réseau de distribution initial</li>
+                </ul>
+            </div>
+            <div class="swot-card opportunities">
+                <h3>OPPORTUNITÉS</h3>
+                <ul>
+                    <li>Demande croissante alimentation saine</li>
+                    <li>Programmes gouvernementaux</li>
+                    <li>Marché institutionnel</li>
+                    <li>Développement e-commerce</li>
+                    <li>Partenariats internationaux</li>
+                </ul>
+            </div>
+            <div class="swot-card threats">
+                <h3>MENACES</h3>
+                <ul>
+                    <li>Concurrence produits importés</li>
+                    <li>Inflation des intrants</li>
+                    <li>Réglementations strictes</li>
+                    <li>Instabilité économique</li>
+                    <li>Grandes surfaces</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Strategy Timeline -->
+    <section id="strategie" class="section fade-in">
+        <h2>Stratégie de Développement</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-date">2025 - Année 1</div>
+                    <h3>Lancement et Implantation</h3>
+                    <p>Mise en place des partenariats avec 5 coopératives, installation des équipements de transformation, lancement sur 3 communes d'Abidjan.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-date">2026 - Année 2</div>
+                    <h3>Expansion et Certification</h3>
+                    <p>Obtention des certifications Bio CI, développement de l'application mobile, extension à 5 communes supplémentaires.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-date">2027 - Année 3</div>
+                    <h3>Diversification</h3>
+                    <p>Lancement des contrats institutionnels, développement de nouveaux produits transformés, expansion vers Bouaké et San Pedro.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-date">2030 - Vision</div>
+                    <h3>Leadership Régional</h3>
+                    <p>Devenir la référence des circuits courts en Afrique de l'Ouest, avec une présence dans 5 pays de la sous-région.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="contact-content">
+            <h2>Contactez-nous</h2>
+            <p>Rejoignez notre mission pour une alimentation saine et locale en Côte d'Ivoire</p>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <svg class="contact-icon" viewBox="0 0 24 24">
+                        <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                    </svg>
+                    <span>agrovital@contact.ci</span>
+                </div>
+                <div class="contact-item">
+                    <svg class="contact-icon" viewBox="0 0 24 24">
+                        <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                    </svg>
+                    <span>+225 07 07 43 30 51</span>
+                </div>
+                <div class="contact-item">
+                    <svg class="contact-icon" viewBox="0 0 24 24">
+                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                    </svg>
+                    <span>Abidjan, Côte d'Ivoire</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Hamburger menu
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        if (hamburger && navLinks) {
+            hamburger.addEventListener('click', () => {
+                navLinks.classList.toggle('open');
+                hamburger.classList.toggle('open');
+            });
+            // Fermer le menu quand on clique sur un lien
+            navLinks.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    navLinks.classList.remove('open');
+                    hamburger.classList.remove('open');
+                });
+            });
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+                navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
+            } else {
+                navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+                navbar.style.boxShadow = 'none';
+            }
+        });
+
+        // Counter animation for stats
+        function animateCounter() {
+            const counters = document.querySelectorAll('.stat-number');
+            counters.forEach(counter => {
+                const target = counter.textContent;
+                const numTarget = parseInt(target.replace(/[^\d]/g, ''));
+                const suffix = target.replace(/[\d]/g, '');
+                
+                if (numTarget) {
+                    let current = 0;
+                    const increment = numTarget / 50;
+                    const timer = setInterval(() => {
+                        current += increment;
+                        if (current >= numTarget) {
+                            counter.textContent = numTarget + suffix;
+                            clearInterval(timer);
+                        } else {
+                            counter.textContent = Math.floor(current) + suffix;
+                        }
+                    }, 40);
+                }
+            });
+        }
+
+        // Trigger counter animation when stats section is visible
+        const statsObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounter();
+                    statsObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        const statsSection = document.querySelector('.stats');
+        if (statsSection) {
+            statsObserver.observe(statsSection);
+        }
+
+        // Add hover effects to cards
+        document.querySelectorAll('.about-card, .stat-card, .swot-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+    });
+    </script>
+</body>
+</html>
